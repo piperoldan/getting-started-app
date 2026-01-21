@@ -1,0 +1,46 @@
+
+services:
+  app:
+    # Use your specific secure image from Docker Hub
+    image: piperoldan/getting-started-slim:1.0
+    build: .
+    # ... other settings ...
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    ports:
+      - "3000:3000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DB: ${MYSQL_DB}
+    networks:
+      - todo-app
+    # Wait for the DB to be ready before starting the app
+    command: ["sh", "-c", "npx wait-port mysql:3306 && node src/index.js"]
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+    networks:
+      - todo-app
+    # ... other settings ...
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 1G
+
+volumes:
+  todo-mysql-data:
+
+networks:
+  todo-app:
