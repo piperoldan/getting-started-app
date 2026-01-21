@@ -1,5 +1,15 @@
-# Getting started
+# Secure Todo App (Dockerized)
 
-This repository is a sample application for users following the getting started guide at https://docs.docker.com/get-started/.
+This is a hardened version of the Docker Getting Started app, optimized for security and performance.
 
-The application is based on the application from the getting started tutorial at https://github.com/docker/getting-started
+## Features
+- **Zero Critical Vulnerabilities:** Built using multi-stage builds and fixed dependencies.
+- **Production Ready:** Uses MySQL 8.0 for persistent data storage.
+- **Optimized:** Resource-limited containers to ensure system stability.
+- **Secure:** Environment variable management via `.env`.
+
+## How to Run
+1. **Clone the repo:**
+   ```bash
+   git clone git@github.com:piperoldan/getting-started-app.git
+   cd getting-started-app
